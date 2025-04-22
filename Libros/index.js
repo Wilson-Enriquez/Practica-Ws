@@ -20,18 +20,36 @@ app.get('/', (req, res) => {
   res.send('¡Hola, mundo! Bienvenido a mi servidor con Express.');
 });
 
+
+
+
+// ==================================================================== uso como ejemplo  
+
+
 // Ruta GET sencilla para "/ping"
 // Responde con el texto 'pong' y código HTTP 200.
 app.get('/ping', (req, res) => {
   
-  res.status(200).send('pong');
+  res.status(200).send('pong Wilson Enriquez');
 });
+
+
+
+
 
 // Ruta GET que responde con JSON en "/pin"
 // Envía un objeto JSON con la propiedad message igual a 'pong'
 app.get('/pin', (req, res) => {
-  res.status(200).json({ message: 'pong' });
+  res.status(200).json({ message: 'pong Wilson Enriquez' });
 });
+
+
+
+// ==================================================================== 
+
+
+
+
 
 // Ruta GET para una API simple
 // Envía un objeto JSON con un mensaje de saludo
