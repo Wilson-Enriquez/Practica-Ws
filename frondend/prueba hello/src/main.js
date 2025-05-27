@@ -6,7 +6,7 @@
 
   // Función para hacer la solicitud al servidor
   function getPingFromWebService() {
-    const url = 'http://localhost:8080/ping';
+    const url = 'http://localhost:8080/pins';
     
     // Encadenar los datos de la URL con la respuesta
     fetch(url)
@@ -19,5 +19,10 @@
       })
       .catch((error) => {
         console.error("Error al obtener el ping:", error);
+        // Mostrar el error en un elemento HTML con ID "errorDisplay"
+        let errorDisplay = document.querySelector("#errorDisplay");
+        if (errorDisplay) {
+          errorDisplay.innerHTML = "Error al obtener el ping: " + error.message;
+        }
       });
   }
