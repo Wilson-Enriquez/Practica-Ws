@@ -11,3 +11,5 @@ COPY index.js .
 EXPOSE 3000
 
 CMD ["node", "index.js"]
+
+# This Dockerfile sets up a Node.js environment using the Alpine Linux distribution.
