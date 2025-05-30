@@ -1,135 +1,76 @@
-// ================================
-// Importar y configurar Express
-// ================================
+const express = require('express');
+const cors = require('cors');
 
-const express = require('express');              // Importamos el módulo de Express
-const app = express();                           // Creamos una instancia de la aplicación Express
-const port = 3000;                               // Definimos el puerto donde el servidor escuchará
+const app = express();
+const PORT = 3000;
 
-// Middleware para parsear el cuerpo de la solicitud en formato JSON.
-// Esto es necesario para poder leer el contenido enviado en peticiones POST.
-app.use(express.json());
+app.use(cors());
+app.use(express.json()); // Permite recibir JSON en POST
 
-// ================================
-// RUTAS CON MÉTODO GET
-// ================================
-
-// Ruta GET para la página principal
-// Responde con un mensaje de bienvenida en texto plano.
-app.get('/', (req, res) => {
-  res.send('¡Hola, mundo! Bienvenido a mi servidor con Express.');
-});
-
-
-
-
-// ==================================================================== uso como ejemplo  
-
-
-// Ruta GET sencilla para "/ping"
-// Responde con el texto 'pong' y código HTTP 200.
-app.get('/ping', (req, res) => {
-  
-  res.status(200).send('pong Wilson Enriquez');
-});
-
-
-
-
-
-// Ruta GET que responde con JSON en "/pin"
-// Envía un objeto JSON con la propiedad message igual a 'pong'
-app.get('/pin', (req, res) => {
-  res.status(200).json({ message: 'pong Wilson Enriquez' });
-});
-
-
-
-// ==================================================================== 
-
-
-
-
-
-// Ruta GET para una API simple
-// Envía un objeto JSON con un mensaje de saludo
-app.get('/api/saludo', (req, res) => {
-  res.json({ mensaje: '¡Hola desde la API!' });
-});
-
-// ================================
-// RUTAS DE LIBROS (GET y POST)
-// ================================
-
-// Creamos un arreglo de libros, donde cada libro es representado como un objeto JSON.
-const libros = [
-  { id: 1, titulo: 'Cien Años de Soledad', autor: 'Gabriel García Márquez' },
-  { id: 2, titulo: 'Don Quijote de la Mancha', autor: 'Miguel de Cervantes' },
-  { id: 3, titulo: 'La Sombra del Viento', autor: 'Carlos Ruiz Zafón' },
-  { id: 4, titulo: 'Rayuela', autor: 'Julio Cortázar' }
+// Lista de libros (almacenados en memoria)
+let libros = [
+  { id: 1, titulo: 'Cien años de soledad', autor: 'Gabriel García Márquez' },
+  { id: 2, titulo: '1984', autor: 'George Orwell' },
 ];
 
-// Ruta GET para mostrar todos los libros
-// Envía el arreglo completo de libros en formato JSON.
+// 1. Obtener todos los libros
 app.get('/libros', (req, res) => {
-  res.status(200).json(libros);
+  res.json(libros);
 });
 
-// Ruta GET para buscar un libro por su ID
-// Se captura el parámetro "id" de la URL, se busca en el arreglo y se responde en JSON.
+// 2. Obtener un libro específico por ID
 app.get('/libros/:id', (req, res) => {
-  // Capturamos y convertimos el "id" de la URL a tipo número.
-  const id = parseInt(req.params.id);
-
-  // Se utiliza el método "find" para buscar el libro con el ID que coincida.
-  // "find" recorre el arreglo y retorna el primer elemento que cumpla la condición.
-  const libro = libros.find(l => l.id === id);
-
-  if (libro) {
-    // Si el libro se encuentra, se envía con código 200 en formato JSON.
-    res.status(200).json(libro);
-  } else {
-    // Si no se encuentra, se envía un mensaje de error con código 404.
-    res.status(404).json({ error: 'Libro no encontrado' });
-  }
+  const libro = libros.find(b => b.id === parseInt(req.params.id));
+  if (!libro) return res.status(404).send('Libro no encontrado');
+  res.json(libro);
 });
 
-// ================================
-// MÉTODO POST PARA AGREGAR LIBROS
-// ================================
-
-// Ruta POST para agregar un nuevo libro a la colección.
-// Se espera que el cliente envíe un JSON con las propiedades "titulo" y "autor".
+// 3. Crear un nuevo libro
 app.post('/libros', (req, res) => {
-  // Extraemos los datos enviados en el cuerpo de la solicitud
-  const nuevoLibro = req.body;
-
-  // Validación básica: se verifica que existan "titulo" y "autor" en el JSON recibido.
-  if (!nuevoLibro.titulo || !nuevoLibro.autor) {
-    // Si falta alguno de los datos, se responde con error 400 (Bad Request).
-    return res.status(400).json({ error: 'Debe enviar un título y un autor.' });
-  }
-
-  // Asignamos un nuevo id al libro, normalmente sumando 1 al último id existente.
-  // En ambientes reales, se debería generar un id de forma más segura (por ejemplo, con una base de datos).
-  nuevoLibro.id = libros.length + 1;
+  const { titulo, autor } = req.body;
+  if (!titulo || !autor) return res.status(400).send('El título y autor son requeridos');
   
-  // Agregamos el nuevo libro al arreglo "libros".
+  const nuevoLibro = {
+    id: libros.length + 1,
+    titulo,
+    autor
+  };
   libros.push(nuevoLibro);
-
-  // Respondemos con el libro creado y un código 201 (Created) para indicar que se creó el recurso.
   res.status(201).json(nuevoLibro);
 });
 
+// 4. Actualizar un libro existente por ID
+app.put('/libros/:id', (req, res) => {
+  const libro = libros.find(b => b.id === parseInt(req.params.id));
+  if (!libro) return res.status(404).send('Libro no encontrado');
 
+  const { titulo, autor } = req.body;
+  libro.titulo = titulo || libro.titulo;
+  libro.autor = autor || libro.autor;
 
+  res.json(libro);
+});
 
+// 5. Eliminar un libro por ID
+app.delete('/libros/:id', (req, res) => {
+  const libroIndex = libros.findIndex(b => b.id === parseInt(req.params.id));
+  if (libroIndex === -1) return res.status(404).send('Libro no encontrado');
 
-// ================================
-// INICIAR EL SERVIDOR
-// ================================
+  libros.splice(libroIndex, 1);
+  res.status(204).send();
+});
 
-// El servidor comienza a escuchar las solicitudes en el puerto definido.
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+// 6. Filtrar libros por autor
+app.get('/libros', (req, res) => {
+  const autor = req.query.autor;
+  if (autor) {
+    const librosFiltrados = libros.filter(b => b.autor.toLowerCase().includes(autor.toLowerCase()));
+    return res.json(librosFiltrados);
+  }
+  res.json(libros);
+});
+
+// Inicia el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
