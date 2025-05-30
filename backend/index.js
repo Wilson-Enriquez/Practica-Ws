@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3030;
+const PORT = 3000;
 
 app.use(cors());
 app.use(express.json()); // Permite recibir JSON en POST

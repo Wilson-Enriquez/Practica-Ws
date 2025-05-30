@@ -4,7 +4,7 @@
 
 const express = require('express');              // Importamos el módulo de Express
 const app = express();                           // Creamos una instancia de la aplicación Express
-const port = 8080;                               // Definimos el puerto donde el servidor escuchará
+const port = 3000;                               // Definimos el puerto donde el servidor escuchará
 
 // Middleware para parsear el cuerpo de la solicitud en formato JSON.
 // Esto es necesario para poder leer el contenido enviado en peticiones POST.
