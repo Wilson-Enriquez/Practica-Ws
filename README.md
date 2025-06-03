@@ -1,9 +1,8 @@
 # Practica-Ws
-
-## Software
+## Desarrollo de Software: Wilson Enriquez
 
 ### Herramientas de Desarrollo de Software
-### Practica Carpeta backend.
+## Practica Carpeta backend.
 
 - **npm**: Gestor de paquetes de Node.js.
 - **npm init**: Inicializa un nuevo proyecto de Node.js.
@@ -12,11 +11,13 @@
 - **Express.js**: Framework para aplicaciones web.
 - **npm i express**: Instala Express.
 
+
+
+# Practica Carpeta Frondend.
 ## Frontend - Práctica
-
-
 ### Configuración del Proyecto
-### Practica Carpeta Libros.
+
+
 
 1. **Iniciar un proyecto con Vite:**
 
@@ -38,7 +39,11 @@
     npm run dev
     ```
 
+
+
+# Practica Carpeta Libros.
 ## Practica Docker Backend-Node-Express-Docker
+
 
 ### Comandos de Instalación y Configuración
 
@@ -174,3 +179,12 @@
     sudo docker rmi backend-node-libros
     ```
 
+## Practica Carpeta Backend_MariaDB.
+
+
+1. **Instalacion de HONO:**
+
+    ```bash
+    npm create hono@latest
+    ```
+    Y ESCOJEMOS node.js y npm.
