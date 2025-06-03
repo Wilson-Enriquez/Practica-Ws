@@ -5,7 +5,7 @@
 ### Herramientas de Desarrollo de Software
 - **npm**: Gestor de paquetes de Node.js.
 - **npm init**: Inicializa un nuevo proyecto de Node.js.
-- Crear el archivo `index.js`.
+- **Crear el archivo `index.js`**.
 - **node index.js**: Ejecuta un proyecto de Node.js.
 - **Express.js**: Framework para aplicaciones web.
 - **npm i express**: Instala Express.
@@ -17,6 +17,7 @@
     ```bash
     npm create vite@latest
     ```
+
 2. **Configuración inicial**:
     - **Nombre del proyecto**: Practica Herramienta Wilson Enriquez.
     - **Framework**: Seleccionar `Vanilla`.
@@ -28,3 +29,90 @@
     npm install
     npm run dev
     ```
+
+# Practica Docker Backend-Node-Express-Docker
+
+### Comandos de Instalación y Configuración
+
+```bash
+# 1. Instalar Docker en Ubuntu
+sudo apt update
+sudo apt install docker.io
+
+# 2. Iniciar y habilitar Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 3. Verificar la instalación de Docker
+docker --version
+
+# 4. Instalar Dependencias de Express.js
+# Ejecutar este comando en tu servidor donde se sincroniza
+npm install express
+
+# 5. Crear el archivo `index.js`
+# Aquí está el contenido para el archivo `index.js`
+echo "const express = require('express');
+const app = express();
+const PORT = 3030;
+
+let libros = [
+  { id: 1, titulo: 'Cien años de soledad', autor: 'Gabriel García Márquez' },
+  { id: 2, titulo: '1984', autor: 'George Orwell' },
+];
+
+app.get('/libros', (req, res) => {
+  res.json(libros);
+});
+
+app.listen(PORT, () => {
+  console.log('Servidor escuchando en http://localhost:' + PORT);
+});
+" > index.js
+
+# 6. Inicializar Git y Sincronizar con el Repositorio
+git init
+git add .
+git commit -m "libros con docker practica"
+git push
+
+# 7. Crear el archivo `Dockerfile`
+# Aquí está el contenido para el archivo `Dockerfile`
+echo "FROM node:20.10.0-alpine3.18
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3030 # Cambia el puerto según sea necesario
+
+CMD [\"node\", \"index.js\"]" > Dockerfile
+
+# 8. Construir la Imagen Docker
+sudo docker build -t backend-node-libros .
+
+# 9. Ejecutar el Contenedor Docker
+sudo docker run -d -p 3030:3030 --name backend-node-libros --restart on-failure backend-node-libros
+
+# 10. Verificar que el Contenedor Está Corriendo
+sudo docker ps
+
+# 11. Acceder a la Aplicación
+# Accede a la aplicación en http://localhost:3030/libros o usa la IP pública en caso de estar en un servidor AWS:
+# http://<Elastic-IP>:3030/libros
+
+# 12. Comandos Docker Adicionales
+# Ver Logs del Contenedor
+sudo docker logs backend-node-libros
+
+# Detener el Contenedor
+sudo docker stop backend-node-libros
+
+# Eliminar el Contenedor
+sudo docker rm backend-node-libros
+
+# Eliminar la Imagen
+sudo docker rmi backend-node-libros
