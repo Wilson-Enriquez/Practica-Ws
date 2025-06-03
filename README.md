@@ -3,6 +3,7 @@
 ## Software
 
 ### Herramientas de Desarrollo de Software
+### Practica Carpeta backend.
 
 - **npm**: Gestor de paquetes de Node.js.
 - **npm init**: Inicializa un nuevo proyecto de Node.js.
@@ -13,7 +14,9 @@
 
 ## Frontend - Práctica
 
+
 ### Configuración del Proyecto
+### Practica Carpeta Libros.
 
 1. **Iniciar un proyecto con Vite:**
 
