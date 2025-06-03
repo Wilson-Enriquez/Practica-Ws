@@ -59,10 +59,12 @@
     docker --version
     ```
 
-4. **Instalar Dependencias de Express.js:**
+4. **Instalar Dependencias de npm:**
+
+    En el servidor en la carpeta, instala las dependencias de npm:
 
     ```bash
-    npm install express
+    npm i
     ```
 
 5. **Crear el archivo `index.js`:**
@@ -168,3 +170,4 @@
     ```bash
     sudo docker rmi backend-node-libros
     ```
+
