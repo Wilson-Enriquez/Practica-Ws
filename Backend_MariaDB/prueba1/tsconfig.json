@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                         // Utiliza ESNext para aprovechar las últimas características de ES
+    "module": "ESNext",                         // Usa ESNext para permitir importaciones tipo ES6
+    "moduleResolution": "node",                 // Resuelve módulos de la manera que Node.js lo haría
+    "strict": true,                             // Activar modo estricto para una mejor validación de tipos
+    "esModuleInterop": true,                    // Permite interoperabilidad entre módulos ES y CommonJS
+    "skipLibCheck": true,                       // Salta la comprobación de tipos en las bibliotecas
+    "types": ["node"],                          // Usa los tipos de Node.js
+    "outDir": "./dist"                          // Directorio de salida para los archivos compilados
+  },
+  "include": [
+    "src/**/*"                                  // Asegúrate de incluir todo el código fuente
+  ],
+  "exclude": [
+    "node_modules"                              // Excluir node_modules para no compilar sus archivos
+  ]
+}
