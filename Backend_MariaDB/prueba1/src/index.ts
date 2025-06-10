@@ -1,7 +1,7 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import valorqueseleda from './ping/ping'  // Importa el enrutador ping
-import greet from './greet/greet'  // Importa el enrutador greet
+import valorqueseleda from './ping/ping.js'  // Importa el enrutador ping
+import greet from './greet/greet.js'  // Importa el enrutador greet
 
 const server = new Hono()
 
