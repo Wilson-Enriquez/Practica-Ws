@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { Greet, Param } from "../greet/greet.mariadb";
+import { Greet, Param } from "../greet/greet.mariadb.js";
 
 // Crear una instancia de Hono
 const greet = new Hono();
